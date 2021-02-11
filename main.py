@@ -5,8 +5,8 @@ def main():
 
     while game.is_running:
         game.render()
-        game.event_handler()
         game.update()
+        game.event_handler()
 
     game.quit()
         
