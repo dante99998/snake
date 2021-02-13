@@ -49,16 +49,15 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     self.is_running = False
                 elif event.key == pg.K_d:
-                    self.dir = DIR_RIGHT
+                    if self.dir != DIR_LEFT: self.dir = DIR_RIGHT
                 elif event.key == pg.K_a:
-                    self.dir = DIR_LEFT
+                    if self.dir != DIR_RIGHT: self.dir = DIR_LEFT
                 elif event.key == pg.K_w:
-                    self.dir = DIR_UP
+                    if self.dir != DIR_DOWN: self.dir = DIR_UP
                 elif event.key == pg.K_s:
-                    self.dir = DIR_DOWN
+                    if self.dir != DIR_UP: self.dir = DIR_DOWN
                 elif event.key == pg.K_f:
                     self.snake.grow()
-                    print("Here should be drowing")
 
     def quit(self):
         pg.quit()

@@ -13,15 +13,10 @@ class Snake:
         x = self.head.x + dir[0]
         y = self.head.y + dir[1]
 
-        if x > SCR_WIDTH: x = 0
-        if y > SCR_HEIGHT: y = 0
-        if x < 0: x = SCR_WIDTH
-        if y < 0: y = SCR_HEIGHT
-
         self.head = Position(x,y)
 
-        if self.head in self.blocks:
-            return False
+        if not in_screen(x, y): return False
+        if self.eat_body(): return False
 
         self.blocks.append(self.head)
 
@@ -29,6 +24,20 @@ class Snake:
         del self.blocks[0]
 
         return True
+
+    def in_screen(self, x, y):
+        if x > SCR_WIDTH or y > SCR_HEIGHT : return False
+        if x < 0 or y < 0: return False
+
+        return True
+
+    def eat_body(self):
+        h_x, h_y = self.head.cur()
+        for pos in self.blocks:
+            x, y = pos.cur()
+            if abs(x - h_x) < 5 and abs(y - h_y) < 5: 
+                return True
+
 
     def grow(self):
         new_head = self.head

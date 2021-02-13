@@ -9,6 +9,7 @@ def main():
         game.event_handler()
 
     game.quit()
+    print("GAME OVER")
         
 if __name__ == "__main__":
     main()
