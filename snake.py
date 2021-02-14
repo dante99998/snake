@@ -1,11 +1,11 @@
 from settings import *
 
 class Snake:
-    def __init__(self, pos):
+    def __init__(self, pos, color):
         self.head = pos
         self.tail = pos
         self.blocks = [self.head]
-        self.long_enough = False
+        self.color = color
 
     def move(self, *dir):
         self.cur_dir = dir
@@ -15,7 +15,7 @@ class Snake:
 
         self.head = Position(x,y)
 
-        if not in_screen(x, y): return False
+        if not self.in_screen(x, y): return False
         if self.eat_body(): return False
 
         self.blocks.append(self.head)
@@ -26,25 +26,25 @@ class Snake:
         return True
 
     def in_screen(self, x, y):
-        if x > SCR_WIDTH or y > SCR_HEIGHT : return False
+        margin = SCR_WIDTH - BLOCK_SIZE[0]
+        if x > margin or y > margin : return False
         if x < 0 or y < 0: return False
 
         return True
 
     def eat_body(self):
+        dir_s = DIR_RIGHT[0]
         h_x, h_y = self.head.cur()
         for pos in self.blocks:
             x, y = pos.cur()
-            if abs(x - h_x) < 5 and abs(y - h_y) < 5: 
+            if abs(x - h_x) < dir_s and abs(y - h_y) < dir_s: 
                 return True
-
 
     def grow(self):
         new_head = self.head
         new_head.change(*self.cur_dir)
         self.blocks.append(new_head)
         self.head = new_head
-        self.long_enough = True
 
     def get_head(self):
         return self.head.cur()
